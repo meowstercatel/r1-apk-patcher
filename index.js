@@ -5,7 +5,7 @@ const { Litterbox } = require("node-catbox");
 const litterbox = new Litterbox();
 
 //CHANGE THESE
-let decompName = "RabbitLauncher0517";
+let decompName = "RabbitLauncher0517"; //.apk file name without .apk
 let uploadToLitterBox = false;
 //CHANGE THESE ^^^^^^^^^^
 
@@ -120,7 +120,7 @@ modifyFunc(
     onKeyDown
 );
 
-replaceLib(".\\libbase.so", "libbase.so")
+replaceLib(".\\libbase.so", "libbase.so");
 
 build();
 
@@ -129,8 +129,8 @@ fs.renameSync(
     `${decompName}_Patched.apk`
 );
 
-fs.rmdirSync(`.\\${base}`)
-fs.rmSync(`${base}_out.apk`)
+fs.rmdirSync(`.\\${base}`);
+fs.rmSync(`${base}_out.apk`);
 
 if (uploadToLitterBox) {
     console.log("Uploading to LitterBox");
@@ -143,6 +143,9 @@ if (uploadToLitterBox) {
             console.log("Output uploaded to LitterBox! Link: " + response)
         );
 }
+
+//these next 2 functions are taken from
+//https://annabelsandford.github.io/rabbit-r1-imeigen/imei_check_v1.html
 
 function calculateChecksum(imeiWithoutChecksum) {
     let imeiArray = imeiWithoutChecksum.split("").map(Number);
@@ -190,7 +193,7 @@ function decomp() {
 }
 
 function modifyFunc(path, modifyWith) {
-    let start = -1; //so we know what part to modify
+    let start = -1;
     let end = -1;
     try {
         let data = fs.readFileSync(path, "utf8");
@@ -200,12 +203,10 @@ function modifyFunc(path, modifyWith) {
         lineArr.forEach((element) => {
             if (element.includes(modifyWith[0])) {
                 start = lineArr.indexOf(element);
-                //console.log("start ", start);
             }
             if (start > 0 && end < 0) {
                 if (element.includes(modifyWith[modifyWith.length - 1])) {
                     end = iter;
-                    //console.log("end ", end);
 
                     for (let i = start; i <= end; i++) {
                         if (modifyWith[i - start] !== undefined)
@@ -226,26 +227,16 @@ function modifyFunc(path, modifyWith) {
 }
 
 function replaceLib(newLibLocation, oldLib) {
-    fs.copyFileSync(newLibLocation, `.\\${base}\\root\\lib\\arm64-v8a\\${oldLib}`)
+    fs.copyFileSync(
+        newLibLocation,
+        `.\\${base}\\root\\lib\\arm64-v8a\\${oldLib}`
+    );
 }
 
 function build() {
-    execSync(`java -jar APKEditor.jar b -i ${base}`, (err, stdout, stderr) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    });
+    execSync(`java -jar APKEditor.jar b -i ${base}`);
 
     execSync(
-        `java -jar uber-apk-signer-1.2.1.jar -a ${decompName}_decompile_xml_out.apk`,
-        (err, stdout, stderr) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            console.log(`stdout: ${stdout}`);
-        }
+        `java -jar uber-apk-signer-1.2.1.jar -a ${decompName}_decompile_xml_out.apk`
     );
 }
