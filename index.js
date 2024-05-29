@@ -100,27 +100,27 @@ const onKeyDown = [
 decomp();
 
 modifyFunc(
-    `.\\${base}\\smali\\classes\\tech\\rabbit\\r1launcher\\RLApp.smali`,
+    `./${base}/smali/classes/tech/rabbit/r1launcher/RLApp.smali`,
     getOSVersion
 );
 
 modifyFunc(
-    `.\\${base}\\smali\\classes\\tech\\rabbit\\r1launcher\\settings\\utils\\SystemControllerUtil.smali`,
+    `./${base}/smali/classes/tech/rabbit/r1launcher/settings/utils/SystemControllerUtil.smali`,
     getImei
 );
 
-modifyFunc(`.\\${base}\\smali\\classes\\AppConfig.smali`, getDeviceId);
+modifyFunc(`./${base}/smali/classes/AppConfig.smali`, getDeviceId);
 
 modifyFunc(
-    `.\\${base}\\smali\\classes\\tech\\rabbit\\r1launcher\\rabbit\\KeyEventHandler.smali`,
+    `./${base}/smali/classes/tech/rabbit/r1launcher/rabbit/KeyEventHandler.smali`,
     onKeyUp
 );
 modifyFunc(
-    `.\\${base}\\smali\\classes\\tech\\rabbit\\r1launcher\\rabbit\\KeyEventHandler.smali`,
+    `./${base}/smali/classes/tech/rabbit/r1launcher/rabbit/KeyEventHandler.smali`,
     onKeyDown
 );
 
-replaceLib(".\\libbase.so", "libbase.so");
+replaceLib("./libbase.so", "libbase.so");
 
 build();
 
@@ -129,7 +129,7 @@ fs.renameSync(
     `${decompName}_Patched.apk`
 );
 
-fs.rmdirSync(`.\\${base}`);
+fs.rmdirSync(`./${base}`, { recursive: true, force: true });
 fs.rmSync(`${base}_out.apk`);
 
 if (uploadToLitterBox) {
@@ -229,7 +229,7 @@ function modifyFunc(path, modifyWith) {
 function replaceLib(newLibLocation, oldLib) {
     fs.copyFileSync(
         newLibLocation,
-        `.\\${base}\\root\\lib\\arm64-v8a\\${oldLib}`
+        `./${base}/root/lib/arm64-v8a/${oldLib}`
     );
 }
 
