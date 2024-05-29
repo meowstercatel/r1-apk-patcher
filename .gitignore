@@ -130,6 +130,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-*_decompile
-*_Patched
+*_Patched*
 *_decompile*
