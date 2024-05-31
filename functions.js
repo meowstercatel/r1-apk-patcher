@@ -1,6 +1,7 @@
 const {generateIMEI} = require("./utils");
+const settings = require("./settings.json");
 
-const imei = generateIMEI();
+const imei = settings.imei=="" ? generateIMEI() : settings.imei;
 
 const getOSVersion = {
     location: "smali/classes/tech/rabbit/r1launcher/RLApp.smali",
