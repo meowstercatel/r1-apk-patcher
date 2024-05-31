@@ -7,8 +7,5 @@
   },
   "author": "meowster",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "node-catbox": "^3.1.0"
-  }
+  "description": ""
 }
