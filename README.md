@@ -4,7 +4,6 @@ tool to patch a clean rabbit apk into a working one
 how to run:
 1. download nodejs [here](https://nodejs.org/en/download/package-manager/current)
 2. if you have your own apk that you want to patch, change it in settings.json
-3. run `npm i` in the project directory
 4. finally run `node index.js`
 5. your patched apk will have the original filename and "_Patched" added to it.
 
