@@ -1,6 +1,8 @@
 # r1-apk-patcher
 tool to patch a clean rabbit apk into a working one
 
+Big thanks to @Asusna for providing a patched libbase.so file
+
 how to run:
 1. download nodejs [here](https://nodejs.org/en/download/package-manager/current)
 2. if you have your own apk that you want to patch, change it in settings.json
