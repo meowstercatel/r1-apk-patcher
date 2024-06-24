@@ -9,7 +9,7 @@ const getOSVersion = {
     `.method private final getOSVersion()Ljava/lang/String;`,
     `.locals 0`,
     `.line 49`,
-    `const-string p0, "rabbit_OS_v0.8.86_20240523151103"`,
+    `const-string p0, "rabbit_OS_v0.8.103_20240620101341"`,
     `return-object p0`,
     `.end method`,
 ]};
@@ -92,7 +92,44 @@ const gotoConnectNetwork = {
     ".end method",
 ]};
 
+const wssClientMethods = {
+    location: "smali/classes/tech/rabbit/r1launcher/wss/WssClient.smali",
+    code: [
+        ".method public native getKey()Ljava/lang/String;",
+        ".end method",
+        ".method public native getHealth()Ljava/lang/String;",
+        ".end method",
+        ".method public getWebSocket()Lokhttp3/WebSocket;",
+        ".locals 0",
+        "iget-object p0, p0, Ltech/rabbit/r1launcher/wss/WssClient;->webSocket:Lokhttp3/WebSocket;",
+        "return-object p0"
+    ]
+}
+
+const wssClientConnection = {
+    location: "smali/classes/tech/rabbit/r1launcher/wss/WssClient.smali",
+    code: [
+        `const-string v1, "App-Version"`,
+        `invoke-virtual {v0, v1, p3}, Lokhttp3/Request$Builder;->addHeader(Ljava/lang/String;Ljava/lang/String;)Lokhttp3/Request$Builder;`,
+        `move-result-object p3`,
+        `const-string v1, "Device-Health"`,
+        `invoke-virtual {p0}, Ltech/rabbit/r1launcher/wss/WssClient;->getHealth()Ljava/lang/String;`,
+        `move-result-object p4`,
+        `invoke-virtual {p3, v1, p4}, Lokhttp3/Request$Builder;->addHeader(Ljava/lang/String;Ljava/lang/String;)Lokhttp3/Request$Builder;`,
+        `new-instance v0, Ljava/lang/StringBuilder;`,
+        `const-string v0, "OS-Version"`,
+        `const-string p4, "rabbit_OS_v0.8.103_20240620101341_MxA1cbwGjoZgqG54ggsYtg8t2RHX1DJ+LHzKtWLfwSSOim69dlKwt1FLnnWFtYeZ5cuSp2NNb+XhzOzIu0SJr1BnrbgpgGd+pXa5"`,
+        `invoke-virtual {p3, v0, p4}, Lokhttp3/Request$Builder;->addHeader(Ljava/lang/String;Ljava/lang/String;)Lokhttp3/Request$Builder;`,
+        `move-result-object p3`,
+        `invoke-virtual {p3, p1}, Lokhttp3/Request$Builder;->url(Ljava/lang/String;)Lokhttp3/Request$Builder;`,
+        `move-result-object p1`,
+        `invoke-virtual {p1}, Lokhttp3/Request$Builder;->build()Lokhttp3/Request;`
+    ]
+}
+
 const functions = {
-    functions: [getOSVersion, getImei, getDeviceId, onKeyUp, onKeyDown, gotoConnectNetwork]
+    functions: [getOSVersion, getImei, getDeviceId, onKeyUp, onKeyDown, gotoConnectNetwork,
+        wssClientMethods, wssClientConnection
+    ]
 }
 module.exports = {functions}

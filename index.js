@@ -8,36 +8,10 @@ const decompName = settings.apkFileName;
 const base = `${decompName}_decompile_xml`;
 
 decomp();
-
 functions.functions.forEach(func => {
     modifyFunc(`./${base}/`+func.location, func.code)
 })
 
-// modifyFunc(
-//     `./${base}/smali/classes/tech/rabbit/r1launcher/RLApp.smali`,
-//     getOSVersion
-// );
-
-// modifyFunc(
-//     `./${base}/smali/classes/tech/rabbit/r1launcher/settings/utils/SystemControllerUtil.smali`,
-//     getImei
-// );
-
-// modifyFunc(`./${base}/smali/classes/AppConfig.smali`, getDeviceId);
-
-// modifyFunc(
-//     `./${base}/smali/classes/tech/rabbit/r1launcher/rabbit/KeyEventHandler.smali`,
-//     onKeyUp
-// );
-// modifyFunc(
-//     `./${base}/smali/classes/tech/rabbit/r1launcher/rabbit/KeyEventHandler.smali`,
-//     onKeyDown
-// );
-
-// modifyFunc(
-//     `./${base}/smali/classes/tech/rabbit/r1launcher/initstep/InitStepActivity.smali`,
-//     gotoConnectNetwork
-// );
 
 replaceLib("./libbase.so", "libbase.so");
 
@@ -51,5 +25,5 @@ fs.renameSync(
     `${decompName}_Patched.apk`
 );
 
-fs.rmdirSync(`./${base}`, { recursive: true, force: true });
+fs.rmSync(`./${base}`, { recursive: true, force: true });
 fs.rmSync(`${base}_out.apk`);
