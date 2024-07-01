@@ -44,6 +44,8 @@ const onKeyUp = {
     "const/4 p0, -0x1",
     "sput p0, Ltech/rabbit/r1launcher/rabbit/KeyEventHandler;->lastKey:I",
     "sput p1, Ltech/rabbit/r1launcher/rabbit/KeyEventHandler;->lastUpKey:I",
+    "const/16 p0, 0x50",
+    "if-eq p1, p0, :setter",
     "const/16 p0, 0x18",
     "if-eq p1, p0, :setter",
     "const/16 p0, 0x19",
@@ -65,6 +67,8 @@ const onKeyDown = {
     code: [
     ".method public final onKeyDown(ILandroid/view/KeyEvent;)Z",
     ".locals 3",
+    "const/16 p0, 0x50",
+    "if-eq p1, p0, :setter",
     "const/16 p0, 0x18",
     "if-eq p1, p0, :setter",
     "const/16 p0, 0x19",
@@ -76,7 +80,7 @@ const onKeyDown = {
     "packed-switch p1, :pswitch_data_0",
     "goto :goto_0",
     ":setter",
-    "const/16 p1, 0x1A",
+    "const/16 p1, 0x1a",
     ":cond_0",
     ":pswitch_0",
 ]};
@@ -110,6 +114,7 @@ const wssClientConnection = {
     location: "smali/classes/tech/rabbit/r1launcher/wss/WssClient.smali",
     code: [
         `const-string v1, "App-Version"`,
+	`const-string p3, "20240615.10-dirty"`,
         `invoke-virtual {v0, v1, p3}, Lokhttp3/Request$Builder;->addHeader(Ljava/lang/String;Ljava/lang/String;)Lokhttp3/Request$Builder;`,
         `move-result-object p3`,
         `const-string v1, "Device-Health"`,
