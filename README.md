@@ -1,7 +1,7 @@
 # r1-apk-patcher
 tool to patch a clean rabbit apk into a working one
 To use this repo you need to download [nodeJS](https://nodejs.org/en/download/package-manager/current) and java. \
-Big thanks to @Asusna for providing a patched libbase.so file.
+If anyone wants to make a fix for vision mode not working for many people, DM me on Discord, @Meowster (smali / java knowledge recommended ofc)
 
 how to run:
 1. download nodejs [here](https://nodejs.org/en/download/package-manager/current)
