@@ -46,7 +46,6 @@ function decomp() {
                 console.error(err);
                 return;
             }
-            console.log("decompiled");
         }
     );
 }
@@ -92,6 +91,21 @@ function replaceLib(newLibLocation, oldLib) {
     );
 }
 
+function replaceStringInManifest(name, value) {
+    //replaces every instance of the "name" keyword
+    const manifest = `./${decompName}_decompile_xml/AndroidManifest.xml`;
+    const data = fs.readFileSync(manifest, "utf-8")
+    let arr = data.split(" ");
+    for (let i = 0; i < arr.length; i++) {
+        const line = arr[i];
+        if(line.includes(name)) {
+            line = `${name}=${value}`
+        }
+    }
+    fs.writeFileSync(manifest, arr.join(" "), "utf-8")
+
+}
+
 function build() {
     execSync(`java -jar APKEditor.jar b -i ${decompName}_decompile_xml`);
 
@@ -100,4 +114,4 @@ function build() {
     );
 }
 
-module.exports = {generateIMEI, decomp, modifyFunc, replaceLib, build}
+module.exports = {generateIMEI, decomp, modifyFunc, replaceLib, build, replaceStringInManifest}

@@ -1,18 +1,20 @@
 const fs = require("fs");
 const {functions} = require("./functions");
-const {decomp, modifyFunc, replaceLib, build} = require("./utils");
+const {decomp, modifyFunc, replaceLib, build, replaceStringInManifest} = require("./utils");
 const settings = require("./settings.json");
 
 const decompName = settings.apkFileName;
-
 const base = `${decompName}_decompile_xml`;
 
+const appVersion = "20240615.10-dirty";
+
 decomp();
+
 functions.functions.forEach(func => {
     modifyFunc(`./${base}/`+func.location, func.code)
 })
 
-
+replaceStringInManifest("android:versionName", `"${appVersion}"`)
 replaceLib("./libbase.so", "libbase.so");
 
 if(fs.existsSync(`./${decompName}_out.apk`)) fs.rmSync(`./${decompName}_out.apk`);
