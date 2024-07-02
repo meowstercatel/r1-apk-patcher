@@ -83,6 +83,7 @@ const onKeyDown = {
     "const/16 p1, 0x1a",
     ":cond_0",
     ":pswitch_0",
+    "sget p0, Ltech/rabbit/r1launcher/rabbit/KeyEventHandler;->lastKey:I"
 ]};
 
 const gotoConnectNetwork = {
