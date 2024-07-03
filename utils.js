@@ -97,7 +97,7 @@ function replaceStringInManifest(name, value) {
     const data = fs.readFileSync(manifest, "utf-8")
     let arr = data.split(" ");
     for (let i = 0; i < arr.length; i++) {
-        const line = arr[i];
+        let line = arr[i];
         if(line.includes(name)) {
             line = `${name}=${value}`
         }
