@@ -5,9 +5,10 @@ If anyone wants to make a fix for vision mode not working for many people, DM me
 
 how to run:
 1. download nodejs [here](https://nodejs.org/en/download/package-manager/current)
-2. if you have your own apk that you want to patch, change it in settings.json
+2. if you have your own r1 IMEI, add it in settings.json
 4. finally run `node index.js`
 5. your patched apk will have the original filename and "_Patched" added to it.
+6. run the commands below so your app won't crash on startup
 
 to run the apk you need to execute this command first (adb): `adb shell pm grant tech.rabbit.r1launcher.r1 android.permission.WRITE_SECURE_SETTINGS`
 or in termux `pm grant tech.rabbit.r1launcher.r1 android.permission.WRITE_SECURE_SETTINGS`
