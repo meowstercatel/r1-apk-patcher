@@ -1,7 +1,7 @@
 const { execSync } = require("child_process");
 const fs = require("fs");
-const settings = require("./settings.json");
-const decompName = settings.apkFileName;
+const decompName = "RabbitLauncher0517";
+const base = `${decompName}_decompile_xml`;
 
 //these next 2 functions are taken from
 //https://annabelsandford.github.io/rabbit-r1-imeigen/imei_check_v1.html
@@ -87,31 +87,34 @@ function modifyFunc(path, modifyWith) {
 function replaceLib(newLibLocation, oldLib) {
     fs.copyFileSync(
         newLibLocation,
-        `./${decompName}_decompile_xml/root/lib/arm64-v8a/${oldLib}`
+        `./${base}/root/lib/arm64-v8a/${oldLib}`
     );
 }
 
 function replaceStringInManifest(name, value) {
-    //replaces every instance of the "name" keyword
-    const manifest = `./${decompName}_decompile_xml/AndroidManifest.xml`;
-    const data = fs.readFileSync(manifest, "utf-8")
-    let arr = data.split(" ");
-    for (let i = 0; i < arr.length; i++) {
-        let line = arr[i];
-        if(line.includes(name)) {
-            line = `${name}=${value}`
-        }
-    }
-    fs.writeFileSync(manifest, arr.join(" "), "utf-8")
-
+    const file = fs.readFileSync(`${base}/AndroidManifest.xml`);
+    let content = file.toString()
+    content = content.split("\n");
+    content.forEach((line) => {
+        const lineIndex = content.indexOf(line);
+            if (line.includes(name)) {
+                console.log(line)
+                line = line.split(`"`);
+                line[1] = value;
+                line = line.join(`"`);
+                content[lineIndex] = line;
+            }
+        });
+    content = content.join("\n");
+    fs.writeFileSync(`${base}/AndroidManifest.xml`, content);
 }
 
 function build() {
-    execSync(`java -jar APKEditor.jar b -i ${decompName}_decompile_xml`);
+    execSync(`java -jar APKEditor.jar b -i ${base}`);
 
     execSync(
-        `java -jar uber-apk-signer-1.2.1.jar -a ${decompName}_decompile_xml_out.apk`
+        `java -jar uber-apk-signer-1.2.1.jar -a ${base}_out.apk`
     );
 }
 
-module.exports = {generateIMEI, decomp, modifyFunc, replaceLib, build, replaceStringInManifest}
+module.exports = { generateIMEI, decomp, modifyFunc, replaceLib, build, replaceStringInManifest }
